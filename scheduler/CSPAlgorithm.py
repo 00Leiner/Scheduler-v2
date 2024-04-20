@@ -3,17 +3,18 @@ from algorithm.backtracking import backtrackingAlgorithm
 from utils.data_format import formatting_data
 
 class CSPAlgorithm:
-    def __init__(self, programs, courses, instructors, rooms) -> None:
+    def __init__(self, programs, courses, instructors, rooms, curriculum) -> None:
         self.programs = programs
         self.courses = courses
         self.instructors = instructors
         self.rooms = rooms
+        self.curriculum = curriculum
         self.define_domain_variable()
         self.define_algorithm()
         self.define_result()
     
     def define_domain_variable(self):
-        assignmnet = assignmnetDomain(self.programs, self.courses, self.instructors, self.rooms)
+        assignmnet = assignmnetDomain(self.programs, self.courses, self.instructors, self.rooms, self.curriculum)
         self.domain_assignment = assignmnet.assignment()
         #print(self.domain_assignment)
         

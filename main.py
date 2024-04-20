@@ -4,6 +4,7 @@ from getData.student_data import fetch_student_data
 from getData.room_data import fetch_room_data
 from getData.teacher_data import fetch_teacher_data
 from getData.course_data import fetch_course_data
+from getData.curriculum_data import fetch_curriculum_data
 from scheduler.CSPAlgorithm import CSPAlgorithm
 
 class Scheduler:
@@ -15,9 +16,10 @@ class Scheduler:
         self.courses = fetch_course_data()
         self.instructors = fetch_teacher_data()
         self.rooms = fetch_room_data()
+        self.curriculum = fetch_curriculum_data()
         
     def CSP(self):
-        csp = CSPAlgorithm(self.programs, self.courses, self.instructors, self.rooms)
+        csp = CSPAlgorithm(self.programs, self.courses, self.instructors, self.rooms, self.curriculum)
         result = csp.define_result()
         return result
         

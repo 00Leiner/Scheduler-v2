@@ -1,12 +1,13 @@
 class assignmnetDomain:
-    def __init__(self, programs, courses, instructors, rooms) -> None:
+    def __init__(self, programs, courses, instructors, rooms, curriculum) -> None:
         self.programs = programs
         self.courses = courses
         self.instructors = instructors
         self.rooms = rooms
+        self.curriculum = curriculum
         
-        self.program_course = {}
-        self._program_course()
+        self.program_curriculum_data= {}
+        self.program_curriculum()
         self.by_specialization = {}
         self.instructor_specialization()
         self.room_by_type = {}
@@ -14,7 +15,7 @@ class assignmnetDomain:
         
     def assignment(self):
         assign = set()
-        for (program_id, course_code), course_type in self.program_course.items():
+        for (program_id, course_code), course_type in self.program_curriculum_data.items():
             for instructor in self.by_specialization[course_code]:
                 for room1 in self.room_by_type[course_type]:
                     for room2 in self.room_by_type['Lecture']:
@@ -56,6 +57,29 @@ class assignmnetDomain:
           for program in self.programs:
             for course in program['courses']:
                 self.program_course[(program['_id'], course['code'])] = course['type']    
+        
+    def program_curriculum(self):
+        for student in self.programs:
+            student_id = student['_id']
+            student_program = student['program']
+            student_major = student['major']
+            student_year = student['year']
+            student_semester = student['semester']
+            
+            for curriculum in self.curriculum:
+                _student_program = curriculum['program']
+                _student_major = curriculum['major']
+                _student_year = curriculum['year']
+                _student_semester = curriculum['semester']
+                
+                if all((student_program == _student_program), 
+                       (student_major == _student_major), 
+                       (student_year == _student_year), 
+                       (student_semester == _student_semester)):
+                    
+                    for course in curriculum['courses']:
+                        
+                        self.program_curriculum_data[(student_id, course['code'])] = course['type']   
               
     def second_day_schedule(self, first_day):
         list_of_days = list(range(1, 7))
