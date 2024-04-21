@@ -44,7 +44,7 @@ def format_data(fetched_data):
     return formatted_data
 
 def fetch_curriculum_data():
-    fetch_url = 'http://192.168.176.1:3000/Curriculum/get'
+    fetch_url = 'http://192.168.176.1:3000/Curriculums/get'
     fetching_instance = Fetching(fetch_url)
     fetched_data = fetching_instance.perform_get_request()
 

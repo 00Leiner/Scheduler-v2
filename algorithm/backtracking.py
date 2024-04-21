@@ -19,13 +19,8 @@ class backtrackingAlgorithm:
             return
         
         if len(schedule) == len(self.program_course):
-            # Check if the current solution is different from existing ones
-            for existing_solution in result:
-                if self.is_different_solution(existing_solution, schedule):
-                    result.append(schedule.copy())
-                    return 
-            # If the current solution is not different from existing ones, discard it
-            return
+            result.append(schedule.copy())
+            return 
         
         for var in domain:
             (program_id, course_code, course_type, instructor, room1, room2, day1, day2, time1, time2) = var
@@ -63,5 +58,4 @@ class backtrackingAlgorithm:
                         #recursion
                         self.backtrack(schedule, update_domain, update_teacher_schedule, update_room_schedule, result)
         
-                        del schedule[(program_id, course_code)]
-
+        del schedule[(program_id, course_code)]
