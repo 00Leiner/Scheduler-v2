@@ -25,7 +25,10 @@ class backtrackingAlgorithm:
         if len(domain) == 0:
             return
         
-        for var in domain:
+        # Sort the domain based on course type
+        sorted_domain = sorted(domain, key=lambda var: var[2] == 'Laboratory', reverse=True)
+        
+        for var in sorted_domain:
             (program_id, course_code, course_type, instructor, room1, room2, day1, day2, time1, time2) = var
             if (program_id, course_code) not in schedule:
                 if check_room_availability(room_schedule, room1, room2, day1, day2, time1, time2, course_type):

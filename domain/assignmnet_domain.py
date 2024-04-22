@@ -48,10 +48,9 @@ class assignmnetDomain:
         self.room_by_type['Laboratory'] = []
         self.room_by_type['Lecture'] = []
         for room in self.rooms:
+            self.room_by_type['Lecture'].append(room['_id'])
             if room['type'] == 'Laboratory':
                 self.room_by_type['Laboratory'].append(room['_id'])
-            else:
-                self.room_by_type['Lecture'].append(room['_id'])
                 
     def _program_course(self):
           for program in self.programs:
