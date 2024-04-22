@@ -19,7 +19,7 @@ class assignmnetDomain:
             for instructor in self.by_specialization[course_code]:
                 for room1 in self.room_by_type[course_type]:
                     for room2 in self.room_by_type['Lecture']:
-                        for day1 in range(1, 7):
+                        for day1 in range(1, 6):
                             for day2 in self.second_day_schedule(day1):
                             
                                 if course_type == 'Laboratory':
