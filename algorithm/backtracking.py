@@ -17,9 +17,6 @@ class backtrackingAlgorithm:
         return result
     
     def backtrack(self, schedule, domain, teacher_schedule, room_schedule, instructor_max, result):
-        if len(result) == 2:
-            return
-        
         if len(schedule) == len(self.program_course):
             result.append(schedule.copy())
             return 
@@ -80,3 +77,4 @@ class backtrackingAlgorithm:
             else:
                 # Remove the invalid assignment from the domain
                 domain.discard(var)
+                
