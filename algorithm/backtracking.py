@@ -18,6 +18,9 @@ class backtrackingAlgorithm:
         if len(result) == 2:
             return
         
+        if len(domain) == 0:
+            return
+        
         if len(schedule) == len(self.program_course):
             result.append(schedule.copy())
             return 
@@ -57,5 +60,13 @@ class backtrackingAlgorithm:
                         
                         #recursion
                         self.backtrack(schedule, update_domain, update_teacher_schedule, update_room_schedule, result)
-        
-        del schedule[(program_id, course_code)]
+                        
+                    else:
+                        # Remove the invalid assignment from the domain
+                        domain.discard(var)
+                else:
+                    # Remove the invalid assignment from the domain
+                    domain.discard(var)
+            else:
+                # Remove the invalid assignment from the domain
+                domain.discard(var)

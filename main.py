@@ -54,8 +54,8 @@ def activate_csp_algorithm():
         return jsonify({"status": "error", "message": str(e)})
   
 if __name__ == "__main__":
-    from waitress import serve
-    serve(app, host="0.0.0.0", port=8080)
-    #scheduler = Scheduler()
-    #p = scheduler.CSP()
-    #print(p)
+    #from waitress import serve
+    #serve(app, host="0.0.0.0", port=8080)
+    scheduler = Scheduler()
+    p = scheduler.CSP()
+    print(p)
