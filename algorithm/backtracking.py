@@ -26,7 +26,7 @@ class backtrackingAlgorithm:
             return
         
         # Sort the domain based on course type
-        sorted_domain = sorted(domain, key=lambda var: var[2] == 'Laboratory', reverse=True)
+        sorted_domain = sorted(domain, key=lambda var: (var[2] != 'Laboratory', var[0], var[1]))
         
         for var in sorted_domain:
             (program_id, course_code, course_type, instructor, room1, room2, day1, day2, time1, time2) = var

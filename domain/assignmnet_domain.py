@@ -20,20 +20,20 @@ class assignmnetDomain:
                 for room1 in self.room_by_type[course_type]:
                     for room2 in self.room_by_type['Lecture']:
                         for day1 in range(1, 7):
-                            day2 = self.second_day_schedule(day1)
+                            for day2 in self.second_day_schedule(day1):
                             
-                            if course_type == 'Laboratory':
-                                first_time_schedule = 3
-                                second_time_schedule = 2
-                            else:
-                                first_time_schedule = 2
-                                second_time_schedule = 1
-                            
-                            for time1 in range(7, (20 - first_time_schedule)):
-                                for time2 in range(7, (20 - second_time_schedule)):
-                                    
-                                    assignment_tuple = (program_id, course_code, course_type, instructor, room1, room2, day1, day2, time1, time2)
-                                    assign.add(assignment_tuple)
+                                if course_type == 'Laboratory':
+                                    first_time_schedule = 3
+                                    second_time_schedule = 2
+                                else:
+                                    first_time_schedule = 2
+                                    second_time_schedule = 1
+                                
+                                for time1 in range(7, (18 - first_time_schedule)):
+                                    for time2 in range(7, (18 - second_time_schedule)):
+                                        
+                                        assignment_tuple = (program_id, course_code, course_type, instructor, room1, room2, day1, day2, time1, time2)
+                                        assign.add(assignment_tuple)
         return assign
             
     def instructor_specialization(self):
@@ -81,12 +81,8 @@ class assignmnetDomain:
                         self.program_curriculum_data[(student_id, course['code'])] = course['type']   
               
     def second_day_schedule(self, first_day):
-        list_of_days = list(range(1, 7))
+        day = list(range(1, 6))
 
-        #2 days gap from first schedule
-        first_day_index = list_of_days.index(first_day)
-        second_day_index = (first_day_index + 4) % len(list_of_days)
-        second_day = list_of_days[second_day_index]
+        result = [d for d in day if abs(d - first_day) > 1]
 
-        return  second_day
-            
+        return  result
