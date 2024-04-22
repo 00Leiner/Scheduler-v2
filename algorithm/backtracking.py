@@ -18,12 +18,12 @@ class backtrackingAlgorithm:
         if len(result) == 2:
             return
         
-        if len(domain) == 0:
-            return
-        
         if len(schedule) == len(self.program_course):
             result.append(schedule.copy())
             return 
+        
+        if len(domain) == 0:
+            return
         
         for var in domain:
             (program_id, course_code, course_type, instructor, room1, room2, day1, day2, time1, time2) = var
