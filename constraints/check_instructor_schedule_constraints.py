@@ -14,25 +14,25 @@ def check_instructor_schedule(teacher_schedule, instructor, day1, day2, time1, t
                 for ts in range(time2, (time2 + time_requirements_2)):
                     if ts in teacher_schedule_copy[instructor][day2]:
                         return False
-                if (len(teacher_schedule_copy[instructor][day2]) + time_requirements_2) > 6:
-                    return False
-            else:
-                if (len(teacher_schedule_copy[instructor]) + 1) > 5:
-                    return False
+                #if (len(teacher_schedule_copy[instructor][day2]) + time_requirements_2) > 6:
+                    #return False
+            #else:
+                #if (len(teacher_schedule_copy[instructor]) + 1) > 5: 
+                    #return False
                     
             for ts in range(time1, (time1 + time_requirements_1)):
                 if ts in teacher_schedule_copy[instructor][day1]:
                     return False
             
-            if (len(teacher_schedule_copy[instructor][day1]) + time_requirements_2) > 6:
-                    return False
+            #if (len(teacher_schedule_copy[instructor][day1]) + time_requirements_2) > 6:
+                    #return False
                 
-        else:
-            if day2 not in teacher_schedule_copy[instructor]:
-                if (len(teacher_schedule_copy[instructor]) + 2) > 5:
-                    return False
-            else:
-                if (len(teacher_schedule_copy[instructor]) + 1) > 5:
-                    return False
+        #else:
+            #if day2 not in teacher_schedule_copy[instructor]:
+                #if (len(teacher_schedule_copy[instructor]) + 2) > 5:
+                    #return False
+            #else:
+                #if (len(teacher_schedule_copy[instructor]) + 1) > 5:
+                    #return False
                 
     return True
