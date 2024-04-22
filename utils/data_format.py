@@ -32,7 +32,7 @@ def formatting_data(result, students_details, courses_details, teachers_details,
                 "day": f"{day1}/{day2}",
                 "time": f"{time1}/{time2}",
                 'room': f"{rooms_details[room1]['name']}/{rooms_details[room2]['name']}",
-                'instructor': f"{teachers_details[instructor_id]["frname"]}  {teachers_details[instructor_id]["srname"]}"
+                'instructor': f"{teachers_details[instructor_id]["fname"]}  {teachers_details[instructor_id]["sname"]}"
             }
             check_same_student[program_id]["sched"].append(student_schedule)
 

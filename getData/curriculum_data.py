@@ -19,17 +19,17 @@ class Fetching:
 def format_data(fetched_data):
     formatted_data = []
 
-    for curriculum in fetched_data.get('curriculum', []):
+    for curriculum in fetched_data.get('curriculums', []):
         program_info = {
             '_id': curriculum.get('_id', ''),
             'program': curriculum.get('program', ''),
             'major': curriculum.get('major', ''),
             'year': curriculum.get('year', ''),
             'semester': curriculum.get('semester', ''),
-            'courses': []
+            'curriculum': []
         }
 
-        for course in curriculum.get('courses', []):
+        for course in curriculum.get('curriculum', []):
             course_info = {
                 'code': course.get('code', ''),
                 'description': course.get('description', ''),
@@ -37,7 +37,7 @@ def format_data(fetched_data):
                 'type': course.get('type', '')
             }
 
-            program_info['courses'].append(course_info)
+            program_info['curriculum'].append(course_info)
 
         formatted_data.append(program_info)
 

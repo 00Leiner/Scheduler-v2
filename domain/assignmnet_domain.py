@@ -34,6 +34,7 @@ class assignmnetDomain:
                                         
                                         assignment_tuple = (program_id, course_code, course_type, instructor, room1, room2, day1, day2, time1, time2)
                                         assign.add(assignment_tuple)
+                         
         return assign
             
     def instructor_specialization(self):
@@ -71,12 +72,9 @@ class assignmnetDomain:
                 _student_year = curriculum['year']
                 _student_semester = curriculum['semester']
                 
-                if all((student_program == _student_program), 
-                       (student_major == _student_major), 
-                       (student_year == _student_year), 
-                       (student_semester == _student_semester)):
+                if all((student_program == _student_program, student_major == _student_major, student_year == _student_year, student_semester == _student_semester)):
                     
-                    for course in curriculum['courses']:
+                    for course in curriculum['curriculum']:
                         
                         self.program_curriculum_data[(student_id, course['code'])] = course['type']   
               

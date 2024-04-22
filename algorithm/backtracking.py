@@ -59,7 +59,7 @@ class backtrackingAlgorithm:
                             
                             update_instructor_max = instructor_max_assign(instructor_max, instructor, course_code)
                             # Perform forward checking
-                            update_domain = forwardChecking(var, domain, teacher_schedule)
+                            update_domain = forwardChecking(var, domain)
                             
                             update_teacher_schedule = instructor_schedule(teacher_schedule, instructor, day1, day2, time1, time2, course_type)
                             

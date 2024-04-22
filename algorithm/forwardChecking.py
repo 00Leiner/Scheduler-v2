@@ -1,6 +1,6 @@
 import random
 
-def forwardChecking(var, domain, teacher_schedule):
+def forwardChecking(var, domain):
     domain_copy = set(domain)  # Create a copy of the domain
     
     (_program_id, _course_code, _course_type, _instructor, _room1, _room2, _day1, _day2, _time1, _time2) = var
@@ -48,5 +48,6 @@ def forwardChecking(var, domain, teacher_schedule):
             if (_room2, _day2, ts) == (room2, day2, time2):
                 domain_copy.discard(_var)
     
-    random.shuffle(domain_copy)            
+    random.shuffle(list(domain_copy))  
+             
     return domain_copy

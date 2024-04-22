@@ -17,6 +17,7 @@ class Scheduler:
         self.instructors = fetch_teacher_data()
         self.rooms = fetch_room_data()
         self.curriculum = fetch_curriculum_data()
+        #print(self.curriculum)
         
     def CSP(self):
         csp = CSPAlgorithm(self.programs, self.courses, self.instructors, self.rooms, self.curriculum)
