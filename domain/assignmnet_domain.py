@@ -82,7 +82,5 @@ class assignmnetDomain:
               
     def second_day_schedule(self, first_day):
         day = list(range(1, 6))
-
         result = [d for d in day if abs(d - first_day) > 1]
-
         return  result
