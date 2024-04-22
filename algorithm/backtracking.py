@@ -34,7 +34,7 @@ class backtrackingAlgorithm:
             if (program_id, course_code) not in schedule:
                 if check_room_availability(room_schedule, room1, room2, day1, day2, time1, time2, course_type):
                     if check_instructor_schedule(teacher_schedule, instructor, day1, day2, time1, time2, course_type):
-                        if check_instructor_max_assign(instructor_max_assign, instructor):
+                        if check_instructor_max_assign(instructor_max, instructor):
             
                             if course_type == 'Laboratory':
                                 time_requirements_1 = 3
