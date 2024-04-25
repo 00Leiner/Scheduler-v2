@@ -7,38 +7,42 @@ from constraints.check_room_availability_constraints import check_room_availabil
 from constraints.room_schedule_constraints import room_sched
 
 class backtrackingAlgorithm:
-    def __init__(self, domain_assignment):
+    def __init__(self, domain_assignment, instructors, numBlockCourse):
+        self.instructors = instructors
         self.domain_assignment = domain_assignment
-        self.program_course = set((program_id, course_code) for program_id, course_code, _, _, _, _, _, _, _, _, in self.domain_assignment)
-        
+        self.numBlockCourse = numBlockCourse
+        self.instructor_specialization_data = self.compute_instructor_specialization()
+
+    def compute_instructor_specialization(self):
+        specialization_data = {}
+        for instructor in self.instructors:
+            _id = instructor['_id']
+            specialization_data[_id] = {specialized['code'] for specialized in instructor['specialized']}
+        return specialization_data
+    
     def backtracking_search(self):
         result = []
-        self.backtrack({}, self.domain_assignment, {}, {}, {}, result)
+        self.backtrack({}, self.domain_assignment, {}, {}, result)
         return result
     
-    def backtrack(self, schedule, domain, teacher_schedule, room_schedule, instructor_max, result):
-        if len(schedule) == len(self.program_course):
+    def backtrack(self, schedule, domain, teacher_schedule, instructor_max, result):
+        if len(result) == 2:
+            return
+        
+        if len(schedule) == self.numBlockCourse:
             result.append(schedule.copy())
             return 
         
-        if len(domain) == 0:
-            return
-        
-        sorted_domain = sorted(domain, key=lambda var: (var[2] != 'Laboratory', var[0], var[1]))
-        
+        sorted_domain = sorted(domain, key=lambda var: (var[2] != 'Laboratory', var[1] not in self.instructor_specialization_data[var[3]], var[2]))
+
         for var in sorted_domain:
             (program_id, course_code, course_type, instructor, room1, room2, day1, day2, time1, time2) = var
             if (program_id, course_code) not in schedule:
-                if check_room_availability(room_schedule, room1, room2, day1, day2, time1, time2, course_type):
                     if check_instructor_schedule(teacher_schedule, instructor, day1, day2, time1, time2, course_type):
                         if check_instructor_max_assign(instructor_max, instructor):
             
-                            if course_type == 'Laboratory':
-                                time_requirements_1 = 3
-                                time_requirements_2 = 2
-                            else:
-                                time_requirements_1 = 2
-                                time_requirements_2 = 1
+                            time_requirements_1 = 3 if course_type == 'Laboratory' else 2
+                            time_requirements_2 = 2 if course_type == 'Laboratory' else 1
                             
                             schedule[(program_id, course_code)] = {
                                 'instructor': instructor,
@@ -55,26 +59,14 @@ class backtrackingAlgorithm:
                             }
                             
                             update_instructor_max = instructor_max_assign(instructor_max, instructor, course_code)
-                            # Perform forward checking
-                            update_domain = forwardChecking(var, domain)
                             
                             update_teacher_schedule = instructor_schedule(teacher_schedule, instructor, day1, day2, time1, time2, course_type)
                             
-                            update_room_schedule = room_sched(room_schedule, room1, room2, day1, day2, time1, time2, course_type)
+                            print("found")
+                            
+                            update_domain = forwardChecking(var, domain)
                             
                             #recursion
-                            self.backtrack(schedule, update_domain, update_teacher_schedule, update_room_schedule, update_instructor_max, result)
-                        
-                        else:
-                            # Remove the invalid assignment from the domain
-                            domain.discard(var)
-                    else:
-                        # Remove the invalid assignment from the domain
-                        domain.discard(var)
-                else:
-                    # Remove the invalid assignment from the domain
-                    domain.discard(var)
-            else:
-                # Remove the invalid assignment from the domain
-                domain.discard(var)
-                
+                            self.backtrack(schedule, update_domain, update_teacher_schedule, update_instructor_max, result)
+                           
+                            del schedule[(program_id, course_code)]

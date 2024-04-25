@@ -16,10 +16,11 @@ class CSPAlgorithm:
     def define_domain_variable(self):
         assignmnet = assignmnetDomain(self.programs, self.courses, self.instructors, self.rooms, self.curriculum)
         self.domain_assignment = assignmnet.assignment()
+        self.numBlockCourse = assignmnet.numBlockCourse()
         #print(self.domain_assignment)
         
     def define_algorithm(self):
-        algo = backtrackingAlgorithm(self.domain_assignment)
+        algo = backtrackingAlgorithm(self.domain_assignment, self.instructors, self.numBlockCourse)
         self.result = algo.backtracking_search()
         #print(self.result)
     
