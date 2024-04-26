@@ -47,12 +47,12 @@ def formatting_data(result, students_details, courses_details, teachers_details,
 
 
 def get_day_name(day):
-    days_of_week = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+    days_of_week = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
 
     # Ensure that the day value is a string representing a number
     try:
         day_number = int(day)
-        if 1 <= day_number <= 6:
+        if 1 <= day_number <= 5:
             return days_of_week[day_number - 1]
         else:
             return "Invalid Day"
