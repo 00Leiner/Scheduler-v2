@@ -11,8 +11,8 @@ def check_room_availability(room_schedule, room1, room2, day1, day2, time1, time
         if room in room_schedule_copy and day in room_schedule_copy[room]:
             for ts in range(time, time + time_requirements):
                 if ts in room_schedule_copy[room][day]:
+                    # print("invalid room")    
                     return False
-        else:
-            return True
-                
+       
+    # print("valid room")     
     return True

@@ -27,7 +27,7 @@ class Scheduler:
 app = Flask(__name__)
 class Fetching:
     def __init__(self):
-        self.url = 'http://192.168.1.7:3000/Schedule/create'
+        self.url = 'http://192.168.1.5:3000/Schedule/create'
 
     def perform_post_request(self, data):
         response = requests.post(self.url, json=data)
