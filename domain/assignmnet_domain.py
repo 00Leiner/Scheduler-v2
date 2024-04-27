@@ -10,6 +10,8 @@ class assignmnetDomain:
         self.program_curriculum()
         self.room_by_type = {}
         self.room_type()
+        self.by_specialization = {}
+        self.instructor_specialization()
     
     def numBlockCourse(self):
         return len(self.program_curriculum_data)
@@ -20,8 +22,9 @@ class assignmnetDomain:
         for (program_id, course_code), course_type in self.program_curriculum_data.items():
             rooms_for_course = self.room_by_type.get(course_type, [])
             lecture_rooms = self.room_by_type.get('Lecture', [])
+            instructors = self.by_specialization.get(course_code, [])
             
-            for instructor in self.instructors:
+            for instructor in instructors:
                 for room1 in rooms_for_course:
                     for room2 in lecture_rooms:
                         for day1 in range(1, 4):
@@ -35,10 +38,18 @@ class assignmnetDomain:
                                 
                                 for time1 in range(7, 18 - time_requirements_1):
                                     for time2 in range(7, 18 - time_requirements_2):
-                                        assignment_tuple = (program_id, course_code, course_type, instructor['_id'], room1, room2, day1, day2, time1, time2)
+                                        assignment_tuple = (program_id, course_code, course_type, instructor, room1, room2, day1, day2, time1, time2)
                                         assign.add(assignment_tuple)
         
         return assign
+    
+    def instructor_specialization(self):
+        for course in self.courses:
+            self.by_specialization[course['code']] = []
+            for instructor in self.instructors:
+                for specialized in instructor['specialized']:
+                    if course['code'] == specialized['code']:
+                        self.by_specialization[course['code']].append(instructor['_id'])
     
     def room_type(self):
         self.room_by_type['Laboratory'] = [room['_id'] for room in self.rooms if room['type'] == 'Laboratory']

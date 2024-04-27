@@ -13,21 +13,13 @@ class backtrackingAlgorithm:
         self.domain_assignment = domain_assignment
         self.numBlockCourse = numBlockCourse
         # print(self.numBlockCourse)
-        self.instructor_specialization_data = self.compute_instructor_specialization()
-
-    def compute_instructor_specialization(self):
-        specialization_data = {}
-        for instructor in self.instructors:
-            _id = instructor['_id']
-            specialization_data[_id] = {specialized['code'] for specialized in instructor['specialized']}
-        return specialization_data
     
     def backtracking_search(self):
         result = []
-        self.backtrack({}, self.domain_assignment, {}, {}, {}, result, {})
+        self.backtrack({}, self.domain_assignment, {}, {}, {}, result)
         return result
     
-    def backtrack(self, schedule, domain, teacher_schedule, room_schedule, blocks_schedule, result, block_course):
+    def backtrack(self, schedule, domain, teacher_schedule, room_schedule, blocks_schedule, result):
         if len(result) == 1:
             return
         
@@ -35,7 +27,7 @@ class backtrackingAlgorithm:
             result.append(schedule.copy())
             return 
         
-        sorted_domain = sorted(domain, key=lambda var: (var[2] != 'Laboratory', var[1] not in self.instructor_specialization_data[var[3]], var[0]))
+        sorted_domain = sorted(domain, key=lambda var: (var[2] != 'Laboratory', var[0]))
 
         for var in sorted_domain:
             (program_id, course_code, course_type, instructor, room1, room2, day1, day2, time1, time2) = var
@@ -43,6 +35,7 @@ class backtrackingAlgorithm:
                 check_blocks_schedule(blocks_schedule, program_id, day1, day2, time1, time2, course_type) and \
                     check_instructor_schedule(teacher_schedule, instructor, day1, day2, time1, time2, course_type) and \
                         check_room_availability(room_schedule, room1, room2, day1, day2, time1, time2, course_type):
+                            
                 time_requirements_1 = 3 if course_type == 'Laboratory' else 2
                 time_requirements_2 = 2 if course_type == 'Laboratory' else 1
                                     
@@ -65,10 +58,6 @@ class backtrackingAlgorithm:
                                   
                 update_blocks_schedule = blocks_sched(blocks_schedule, program_id, day1, day2, time1, time2, course_type)     
                             
-                update_block_course = self.blocks_course(block_course, program_id, course_code)   
-                            
-                print("Blocks Course: ", update_block_course)
-                print()
                 print("Blocks Schedule: ", update_blocks_schedule)
                 print()
                 print("Instructors Schedule: ", update_teacher_schedule)
@@ -79,19 +68,9 @@ class backtrackingAlgorithm:
                 update_domain = forwardChecking(var, domain)
                                     
                 #recursion
-                self.backtrack(schedule, update_domain, update_teacher_schedule, update_room_schedule, update_blocks_schedule,  result, update_block_course)
+                self.backtrack(schedule, update_domain, update_teacher_schedule, update_room_schedule, update_blocks_schedule,  result)
                 
                 teacher_schedule = update_teacher_schedule
                 room_schedule = update_room_schedule
                 blocks_schedule = update_blocks_schedule
                         
-    def blocks_course(self, block_course, program_id, course_code):
-        blocks_course_copy = copy.deepcopy(block_course)
-        
-        if program_id not in blocks_course_copy:
-            blocks_course_copy[program_id] = []
-        
-        blocks_course_copy[program_id].append(course_code)
-        
-        return blocks_course_copy
-            
